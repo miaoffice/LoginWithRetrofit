@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     Spinner spUsername;
     EditText etPassword;
     Button bLogin;
+    SharedPreferences preferences;
 
 
     // build a RetroFit client
@@ -58,6 +59,9 @@ public class LoginActivity extends AppCompatActivity {
         spUsername.setAdapter(adapter);
 
         bLogin.setOnClickListener(loginOnClickListener);
+
+        // get a reference to SharedPreferences
+        preferences = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
 
 
     }
@@ -93,14 +97,17 @@ public class LoginActivity extends AppCompatActivity {
             // is the login is successful, send user to the next Activity
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if(response.isSuccessful()) {
+                if(response.isSuccessful() && response.body().getSuccess()) {
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                     String token = response.body().getToken();
                     if(token != null) {
-                        showNextPage(token);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString(Constants.SHARED_PREFERENCES_TOKEN, token);
+                        editor.commit();
+                        showNextPage();
                     }
                 } else {
-                    Toast.makeText(LoginActivity.this, "Login failed (onResponse)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Wrong username or password", Toast.LENGTH_SHORT).show();
                 }
             }
             // if login fails, show a Toast message
@@ -113,11 +120,22 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void showNextPage(String token) {
+    /*
+    Extracts token from SharedPreferences and sends the user to another activity
+    where a message from the server is displayed if the token is okay
+     */
+    private void showNextPage() {
+        // get the value of token
+        String token = preferences.getString(Constants.SHARED_PREFERENCES_TOKEN, null);
+        // make a http call to the server and send the token as a query
+        // TODO: put token in header once server can handle it
         Call<ResponseBody> call = userClient.seeNextPage(token);
+        // enque the call
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // if there is a response from the server, cast it into a string and
+                // send it as an Extra to SecondActivity
                 if(response.isSuccessful()) {
                     try {
                         String serverMessage = response.body().string();
