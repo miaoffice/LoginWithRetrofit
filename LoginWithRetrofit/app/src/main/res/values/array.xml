@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="spinnerUsernames">
+        <item>Username1</item>
+        <item>Username2</item>
+        <item>Username3</item>
+        <item>Username4</item>
+        <item>Username5</item>
+    </string-array>
+
+</resources>

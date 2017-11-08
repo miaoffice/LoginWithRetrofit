@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">LoginWithRetrofit</string>
+
+    <!-- UI components -->
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+
+    <string name="serverMessageDefault">This will show the server response</string>
+
+</resources>
