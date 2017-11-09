@@ -127,8 +127,7 @@ public class LoginActivity extends AppCompatActivity {
     private void showNextPage() {
         // get the value of token
         String token = preferences.getString(Constants.SHARED_PREFERENCES_TOKEN, null);
-        // make a http call to the server and send the token as a query
-        // TODO: put token in header once server can handle it
+        // make a http call to the server and send the token in a header
         Call<ResponseBody> call = userClient.seeNextPage(token);
         // enque the call
         call.enqueue(new Callback<ResponseBody>() {

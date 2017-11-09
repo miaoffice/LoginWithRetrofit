@@ -35,8 +35,7 @@ public interface UserClient {
      In the Header of the call, we state that it is an authorization call, and send in a token
      to identify the user
      */
-    // TODO: Send token as Header
     @GET("home/login/secret")
-    Call<ResponseBody> seeNextPage(@Query("token") String authToken);
+    Call<ResponseBody> seeNextPage(@Header("x-access-token") String authToken);
 
 }
