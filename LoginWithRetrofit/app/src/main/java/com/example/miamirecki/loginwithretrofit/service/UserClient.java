@@ -1,7 +1,7 @@
 package com.example.miamirecki.loginwithretrofit.service;
 
 import com.example.miamirecki.loginwithretrofit.model.Login;
-import com.example.miamirecki.loginwithretrofit.model.User;
+import com.example.miamirecki.loginwithretrofit.model.LoginResponse;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -9,8 +9,6 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 /**
  * Created by miamirecki on 11/3/17.
@@ -26,7 +24,7 @@ public interface UserClient {
     The @Body of the request is a Login object, containing a username and a password
      */
     @POST("home/login")
-    Call<User> login(@Body Login login);
+    Call<LoginResponse> login(@Body Login login);
 
     /*
     "secondpage" is a URL endpoint for which we need a token to be able to access it

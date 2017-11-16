@@ -4,18 +4,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.miamirecki.loginwithretrofit.model.Login;
-import com.example.miamirecki.loginwithretrofit.model.User;
+import com.example.miamirecki.loginwithretrofit.model.LoginResponse;
 import com.example.miamirecki.loginwithretrofit.service.UserClient;
 
 import java.io.IOException;
@@ -90,13 +87,13 @@ public class LoginActivity extends AppCompatActivity {
         Login loginDetails = new Login(username, password, false);
 
         // call the login function from UserClient interface
-        Call<User> call = userClient.login(loginDetails);
+        Call<LoginResponse> call = userClient.login(loginDetails);
 
         // enqueue this call and decide how to treat the response
-        call.enqueue(new Callback<User>() {
+        call.enqueue(new Callback<LoginResponse>() {
             // is the login is successful, send user to the next Activity
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful() && response.body().getSuccess()) {
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                     String token = response.body().getToken();
@@ -112,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             // if login fails, show a Toast message
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Login failed (onFailure)", Toast.LENGTH_SHORT).show();
             }
         });
