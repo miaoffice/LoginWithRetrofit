@@ -5,6 +5,8 @@
     <string name="username">username</string>
     <string name="password">password</string>
     <string name="login">Login</string>
+    <string name="registerHere">Register here</string>
+    <string name="accountIconImageDescription">Round Account Icon</string>
 
     <string name="serverMessageDefault">This will show the server response</string>
 

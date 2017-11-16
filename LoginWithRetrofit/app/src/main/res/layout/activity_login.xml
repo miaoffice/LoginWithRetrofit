@@ -20,12 +20,12 @@
             android:id="@+id/etUsernameLogin"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="42dp"
             android:elevation="5dp"
             android:hint="@string/username"
             android:padding="10dp"
             android:visibility="visible"
-            android:layout_above="@+id/etPasswordLogin"
+            android:layout_marginTop="95dp"
+            android:layout_alignParentTop="true"
             android:layout_alignLeft="@+id/etPasswordLogin"
             android:layout_alignStart="@+id/etPasswordLogin" />
 
@@ -33,13 +33,13 @@
             android:id="@+id/etPasswordLogin"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="64dp"
             android:elevation="5dp"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:padding="10dp"
             android:visibility="visible"
-            android:layout_above="@+id/bLogin"
+            android:layout_marginTop="28dp"
+            android:layout_below="@+id/etUsernameLogin"
             android:layout_alignLeft="@+id/bLogin"
             android:layout_alignStart="@+id/bLogin" />
 
@@ -47,15 +47,24 @@
             android:id="@+id/bLogin"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="44dp"
             android:background="@drawable/button_rounded_background"
             android:elevation="8dp"
             android:padding="10dp"
             android:text="@string/login"
             android:textColor="@color/accent"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:layout_marginTop="92dp"
+            android:layout_alignTop="@+id/etPasswordLogin"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/tvRegisterHere"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="43dp"
+            android:text="@string/registerHere" />
 
     </RelativeLayout>
 
@@ -67,7 +76,8 @@
         android:layout_marginTop="27dp"
         android:background="@drawable/icon_rounded_background"
         android:elevation="8dp"
-        app:srcCompat="@mipmap/ic_account_circle_white_48dp" />
+        app:srcCompat="@mipmap/ic_account_circle_white_48dp"
+        android:contentDescription="@string/accountIconImageDescription"/>
 
 
 </FrameLayout>

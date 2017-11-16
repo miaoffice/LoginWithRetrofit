@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.miamirecki.loginwithretrofit.model.Login;
@@ -30,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText etUsername;
     EditText etPassword;
     Button bLogin;
+    TextView tvRegister;
     SharedPreferences preferences;
 
 
@@ -51,9 +53,11 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = (EditText) findViewById(R.id.etUsernameLogin);
         etPassword = (EditText) findViewById(R.id.etPasswordLogin);
         bLogin = (Button) findViewById(R.id.bLogin);
+        tvRegister = (TextView) findViewById(R.id.tvRegisterHere);
 
 
         bLogin.setOnClickListener(loginOnClickListener);
+        tvRegister.setOnClickListener(registerOnClickListener);
 
         // get a reference to SharedPreferences
         preferences = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
@@ -61,6 +65,10 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /*
+    Checks if both username and password feilds are filled,
+    takes the data and sends it to login()
+     */
     View.OnClickListener loginOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -72,6 +80,14 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 login(username, password);
             }
+        }
+    };
+
+    View.OnClickListener registerOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // TODO: Make a register Intent
+            Toast.makeText(LoginActivity.this, "Not yet implemented", Toast.LENGTH_SHORT).show();
         }
     };
 
