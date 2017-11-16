@@ -27,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity {
 
     // declare fields
-    Spinner spUsername;
+    EditText etUsername;
     EditText etPassword;
     Button bLogin;
     SharedPreferences preferences;
@@ -48,12 +48,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        spUsername = (Spinner) findViewById(R.id.spUsernameLogin);
+        etUsername = (EditText) findViewById(R.id.etUsernameLogin);
         etPassword = (EditText) findViewById(R.id.etPasswordLogin);
         bLogin = (Button) findViewById(R.id.bLogin);
 
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.spinnerUsernames, R.layout.spinner_item);
-        spUsername.setAdapter(adapter);
 
         bLogin.setOnClickListener(loginOnClickListener);
 
@@ -66,11 +64,11 @@ public class LoginActivity extends AppCompatActivity {
     View.OnClickListener loginOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String username = spUsername.getSelectedItem().toString();
+            String username = etUsername.getText().toString();
             String password = etPassword.getText().toString();
 
-            if(password.isEmpty()) {
-                Toast.makeText( LoginActivity.this, "Please provide a password", Toast.LENGTH_SHORT).show();
+            if(username.isEmpty() || password.isEmpty()) {
+                Toast.makeText( LoginActivity.this, "Please provide a username and a password", Toast.LENGTH_SHORT).show();
             } else {
                 login(username, password);
             }
