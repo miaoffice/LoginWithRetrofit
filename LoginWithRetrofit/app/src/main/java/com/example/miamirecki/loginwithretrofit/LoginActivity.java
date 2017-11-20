@@ -4,17 +4,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.miamirecki.loginwithretrofit.model.Login;
 import com.example.miamirecki.loginwithretrofit.model.LoginResponse;
 import com.example.miamirecki.loginwithretrofit.service.UserClient;
+import com.example.miamirecki.loginwithretrofit.utilities.TokenUtils;
 
 import java.io.IOException;
 
@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        etUsername = (EditText) findViewById(R.id.etUsernameLogin);
+        etUsername = (EditText) findViewById(R.id.etUsernameRegister);
         etPassword = (EditText) findViewById(R.id.etPasswordLogin);
         bLogin = (Button) findViewById(R.id.bLogin);
         tvRegister = (TextView) findViewById(R.id.tvRegisterHere);
@@ -76,18 +76,25 @@ public class LoginActivity extends AppCompatActivity {
             String password = etPassword.getText().toString();
 
             if(username.isEmpty() || password.isEmpty()) {
-                Toast.makeText( LoginActivity.this, "Please provide a username and a password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        LoginActivity.this,
+                        "Please provide a username and a password",
+                        Toast.LENGTH_SHORT
+                ).show();
             } else {
                 login(username, password);
             }
         }
     };
 
+    /*
+    Sends the user to the RegisterActivity
+     */
     View.OnClickListener registerOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            // TODO: Make a register Intent
-            Toast.makeText(LoginActivity.this, "Not yet implemented", Toast.LENGTH_SHORT).show();
+            Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(registerIntent);
         }
     };
 
@@ -98,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
     private void login(String username, String password) {
 
         // create a Login object
-        Login loginDetails = new Login(username, password, false);
+        Login loginDetails = new Login(username, password);
 
         // call the login function from UserClient interface
         Call<LoginResponse> call = userClient.login(loginDetails);
@@ -112,13 +119,16 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                     String token = response.body().getToken();
                     if(token != null) {
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString(Constants.SHARED_PREFERENCES_TOKEN, token);
-                        editor.commit();
+                        TokenUtils.writeTokenToSharedPreferences(preferences, token);
+                        // Send user to the next Activity
                         showNextPage();
                     }
                 } else {
-                    Toast.makeText(LoginActivity.this, "Wrong username or password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            LoginActivity.this,
+                            "Wrong username or password",
+                            Toast.LENGTH_SHORT
+                    ).show();
                 }
             }
             // if login fails, show a Toast message
@@ -135,10 +145,10 @@ public class LoginActivity extends AppCompatActivity {
     Extracts token from SharedPreferences and sends the user to another activity
     where a message from the server is displayed if the token is okay
      */
-    private void showNextPage() {
+    public void showNextPage() {
         // get the value of token
-        String token = preferences.getString(Constants.SHARED_PREFERENCES_TOKEN, null);
-        // make a http call to the server and send the token in a header
+        String token = TokenUtils.getTokenFromSharedPreferences(preferences);
+        // make an http call to the server
         Call<ResponseBody> call = userClient.seeNextPage(token);
         // enque the call
         call.enqueue(new Callback<ResponseBody>() {

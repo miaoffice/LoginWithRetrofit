@@ -2,11 +2,18 @@
     <string name="app_name">LoginWithRetrofit</string>
 
     <!-- UI components -->
+    <!-- Login screen -->
     <string name="username">username</string>
     <string name="password">password</string>
     <string name="login">Login</string>
     <string name="registerHere">Register here</string>
     <string name="accountIconImageDescription">Round Account Icon</string>
+
+    <!-- Register screen -->
+    <string name="pickAUsername">Pick a username</string>
+    <string name="pickAPassword">Pick a password</string>
+    <string name="loginHere">Already have an account? Click here to log in!</string>
+    <string name="register">Register</string>
 
     <string name="serverMessageDefault">This will show the server response</string>
 

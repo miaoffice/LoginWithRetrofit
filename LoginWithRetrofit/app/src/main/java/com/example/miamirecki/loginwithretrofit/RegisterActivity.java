@@ -1,0 +1,125 @@
+package com.example.miamirecki.loginwithretrofit;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.miamirecki.loginwithretrofit.model.BaseResponse;
+import com.example.miamirecki.loginwithretrofit.model.Login;
+import com.example.miamirecki.loginwithretrofit.model.LoginResponse;
+import com.example.miamirecki.loginwithretrofit.service.UserClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class RegisterActivity extends AppCompatActivity {
+
+    EditText etNewUsername;
+    EditText etNewPassword;
+    Button bRegister;
+    TextView tvLoginHere;
+
+    SharedPreferences preferences;
+
+    // build a RetroFit client
+    Retrofit.Builder builder = new Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create());
+
+    Retrofit retrofit = builder.build();
+
+    UserClient userClient = retrofit.create(UserClient.class);
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
+
+        // Find UI elements
+        etNewUsername = (EditText) findViewById(R.id.etUsernameRegister);
+        etNewPassword = (EditText) findViewById(R.id.etPasswordRegister);
+        bRegister = (Button) findViewById(R.id.bRegister);
+        tvLoginHere = (TextView) findViewById(R.id.tvLoginHere);
+
+        // Set onClickListeners to Buttons
+        tvLoginHere.setOnClickListener(loginHerePressed);
+        bRegister.setOnClickListener(registerButtonPressed);
+
+        // Get a reference to SharedPreferences to get token
+        preferences = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
+    }
+
+    View.OnClickListener registerButtonPressed = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String username = etNewUsername.getText().toString();
+            String password = etNewPassword.getText().toString();
+
+            if(username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(
+                        RegisterActivity.this,
+                        "You must enter username and password",
+                        Toast.LENGTH_SHORT
+                ).show();
+            } else {
+                register(username, password);
+            }
+        }
+    };
+
+    /*
+    Allows user to go to login page if they already have an account
+     */
+    View.OnClickListener loginHerePressed = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+        }
+    };
+
+    private void register(final String username, final String password) {
+
+        // create a Login object
+        Login registerDetails = new Login(username, password);
+
+        // call the login function from UserClient interface
+        Call<BaseResponse> call = userClient.register(registerDetails);
+
+        // enqueue this call and decide how to treat the response
+        call.enqueue(new Callback<BaseResponse>() {
+            // is the login is successful, send user to the next Activity
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if(response.isSuccessful() && response.body().getSuccess()) {
+                    Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                    // TODO: Show next page after successful login
+
+
+                } else {
+                    Toast.makeText(
+                            RegisterActivity.this,
+                            "Wrong username or password",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+            // if login fails, show a Toast message
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                Toast.makeText(RegisterActivity.this, "Login failed (onFailure)", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+}

@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.miamirecki.loginwithretrofit.LoginActivity"
+    tools:context="com.example.miamirecki.loginwithretrofit.RegisterActivity"
     android:background="@color/primary">
 
     <RelativeLayout
-        android:id="@+id/mainRelativeLayout"
+        android:id="@+id/rlRegister"
         android:layout_width="320dp"
         android:layout_height="400dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="80dp"
         android:background="@color/primary_light"
         android:elevation="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pickAUsername"
+            android:id="@+id/textView"
+            android:layout_above="@+id/etPasswordRegister"
+            android:layout_alignLeft="@+id/etUsernameRegister"
+            android:layout_alignStart="@+id/etUsernameRegister"
+            android:layout_marginBottom="41dp"
+            android:textColor="@color/accent"/>
 
         <EditText
             android:id="@+id/etUsernameRegister"
@@ -26,11 +38,20 @@
             android:visibility="visible"
             android:layout_marginTop="95dp"
             android:layout_alignParentTop="true"
-            android:layout_alignLeft="@+id/etPasswordLogin"
-            android:layout_alignStart="@+id/etPasswordLogin" />
+            android:layout_alignLeft="@+id/etPasswordRegister"
+                android:layout_alignStart="@+id/etPasswordRegister" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pickAPassword"
+            android:textColor="@color/accent"
+            android:layout_above="@+id/bRegister"
+            android:layout_alignRight="@+id/textView"
+            android:layout_alignEnd="@+id/textView" />
 
         <EditText
-            android:id="@+id/etPasswordLogin"
+            android:id="@+id/etPasswordRegister"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:elevation="5dp"
@@ -40,31 +61,31 @@
             android:visibility="visible"
             android:layout_marginTop="28dp"
             android:layout_below="@+id/etUsernameRegister"
-            android:layout_alignLeft="@+id/bLogin"
-            android:layout_alignStart="@+id/bLogin" />
+            android:layout_alignLeft="@+id/bRegister"
+            android:layout_alignStart="@+id/bRegister" />
 
         <Button
-            android:id="@+id/bLogin"
+            android:id="@+id/bRegister"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button_rounded_background"
             android:elevation="8dp"
             android:padding="10dp"
-            android:text="@string/login"
+            android:text="@string/register"
             android:textColor="@color/accent"
             android:visibility="visible"
             android:layout_marginTop="92dp"
-            android:layout_alignTop="@+id/etPasswordLogin"
+            android:layout_alignTop="@+id/etPasswordRegister"
             android:layout_centerHorizontal="true" />
 
         <TextView
-            android:id="@+id/tvRegisterHere"
+            android:id="@+id/tvLoginHere"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="43dp"
-            android:text="@string/registerHere" />
+            android:text="@string/loginHere" />
 
     </RelativeLayout>
 
