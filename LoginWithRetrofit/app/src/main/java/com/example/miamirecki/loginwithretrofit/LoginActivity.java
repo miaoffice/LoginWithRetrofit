@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.miamirecki.loginwithretrofit.model.Login;
 import com.example.miamirecki.loginwithretrofit.model.LoginResponse;
+import com.example.miamirecki.loginwithretrofit.service.ServiceGenerator;
 import com.example.miamirecki.loginwithretrofit.service.UserClient;
 import com.example.miamirecki.loginwithretrofit.utilities.TokenUtils;
 
@@ -34,14 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences preferences;
 
 
-    // build a RetroFit client
-    Retrofit.Builder builder = new Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create());
-
-    Retrofit retrofit = builder.build();
-
-    UserClient userClient = retrofit.create(UserClient.class);
+    UserClient userClient = ServiceGenerator.createService(UserClient.class);
 
 
     // get references to UI objects in onCreate() and set the OnClickListener
@@ -114,15 +108,19 @@ public class LoginActivity extends AppCompatActivity {
             // is the login is successful, send user to the next Activity
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+
                 if(response.isSuccessful() && response.body().getSuccess()) {
+
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+
                     String token = response.body().getToken();
+
                     if(token != null) {
                         TokenUtils.writeTokenToSharedPreferences(preferences, token);
-                        // Send user to the next Activity
-                        showNextPage();
+                        showProfilePage();
                     }
                 } else {
+
                     Toast.makeText(
                             LoginActivity.this,
                             "Wrong username or password",
@@ -137,51 +135,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
-    /*
-    Extracts token from SharedPreferences and sends the user to another activity
-    where a message from the server is displayed if the token is okay
-     */
-    public void showNextPage() {
-        // get the value of token
-        String token = TokenUtils.getTokenFromSharedPreferences(preferences);
-        // make an http call to the server
-        Call<ResponseBody> call = userClient.seeProfilePage(token);
-        // enque the call
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                // if there is a response from the server, cast it into a string and
-                // send it as an Extra to ProfilePageActivity
-                if(response.isSuccessful()) {
-                    try {
-                        String serverMessage = response.body().string();
-                        Intent toSecondActivityIntent = new Intent(LoginActivity.this, ProfilePageActivity.class);
-                        toSecondActivityIntent.putExtra(Constants.SECOND_ACTIVITY_EXTRA, serverMessage);
-                        startActivity(toSecondActivityIntent);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Toast.makeText(
-                            LoginActivity.this,
-                            "Failed to get response via showNextPage() - onResponse",
-                            Toast.LENGTH_SHORT)
-                            .show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(
-                        LoginActivity.this,
-                        "Failed to get response via showNextPage() - onFailure",
-                        Toast.LENGTH_SHORT)
-                        .show();
-            }
-        });
+    private void showProfilePage() {
+        Intent showProfilePageIntent = new Intent(LoginActivity.this, ProfilePageActivity.class);
+        startActivity(showProfilePageIntent);
     }
+
+
 
 }

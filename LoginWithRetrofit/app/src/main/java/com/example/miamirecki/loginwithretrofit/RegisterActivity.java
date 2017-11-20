@@ -15,6 +15,7 @@ import com.example.miamirecki.loginwithretrofit.model.BaseResponse;
 import com.example.miamirecki.loginwithretrofit.model.Login;
 import com.example.miamirecki.loginwithretrofit.model.LoginResponse;
 import com.example.miamirecki.loginwithretrofit.model.RegisterDetails;
+import com.example.miamirecki.loginwithretrofit.service.ServiceGenerator;
 import com.example.miamirecki.loginwithretrofit.service.UserClient;
 
 import retrofit2.Call;
@@ -35,14 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     SharedPreferences preferences;
 
-    // build a RetroFit client
-    Retrofit.Builder builder = new Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create());
-
-    Retrofit retrofit = builder.build();
-
-    UserClient userClient = retrofit.create(UserClient.class);
+    UserClient userClient = ServiceGenerator.createService(UserClient.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
