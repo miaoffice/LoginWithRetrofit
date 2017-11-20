@@ -17,50 +17,58 @@
         android:background="@color/primary_light"
         android:elevation="8dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pickAUsername"
-            android:id="@+id/textView"
-            android:layout_above="@+id/etPasswordRegister"
+        <EditText
+            android:id="@+id/etFirstNameRegister"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:hint="@string/firstName"
+            android:padding="10dp"
+            android:layout_above="@+id/etLastNameRegister"
+            android:layout_alignLeft="@+id/etLastNameRegister"
+            android:layout_alignStart="@+id/etLastNameRegister" />
+
+        <EditText
+            android:id="@+id/etLastNameRegister"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:hint="@string/lastName"
+            android:padding="10dp"
+            android:layout_above="@+id/etEmailRegister"
+            android:layout_alignLeft="@+id/etEmailRegister"
+            android:layout_alignStart="@+id/etEmailRegister" />
+
+        <EditText
+            android:id="@+id/etEmailRegister"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:layout_above="@+id/etUsernameRegister"
             android:layout_alignLeft="@+id/etUsernameRegister"
-            android:layout_alignStart="@+id/etUsernameRegister"
-            android:layout_marginBottom="41dp"
-            android:textColor="@color/accent"/>
+            android:layout_alignStart="@+id/etUsernameRegister" />
 
         <EditText
             android:id="@+id/etUsernameRegister"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:elevation="5dp"
+            android:layout_height="40dp"
             android:hint="@string/username"
             android:padding="10dp"
             android:visibility="visible"
-            android:layout_marginTop="95dp"
-            android:layout_alignParentTop="true"
+            android:layout_above="@+id/etPasswordRegister"
             android:layout_alignLeft="@+id/etPasswordRegister"
-                android:layout_alignStart="@+id/etPasswordRegister" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pickAPassword"
-            android:textColor="@color/accent"
-            android:layout_above="@+id/bRegister"
-            android:layout_alignRight="@+id/textView"
-            android:layout_alignEnd="@+id/textView" />
+            android:layout_alignStart="@+id/etPasswordRegister" />
 
         <EditText
             android:id="@+id/etPasswordRegister"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:elevation="5dp"
+            android:layout_height="40dp"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:padding="10dp"
             android:visibility="visible"
-            android:layout_marginTop="28dp"
-            android:layout_below="@+id/etUsernameRegister"
+            android:layout_marginBottom="13dp"
+            android:layout_above="@+id/bRegister"
             android:layout_alignLeft="@+id/bRegister"
             android:layout_alignStart="@+id/bRegister" />
 
@@ -74,18 +82,19 @@
             android:text="@string/register"
             android:textColor="@color/accent"
             android:visibility="visible"
-            android:layout_marginTop="92dp"
-            android:layout_alignTop="@+id/etPasswordRegister"
+            android:layout_marginBottom="30dp"
+            android:layout_above="@+id/tvLoginHere"
             android:layout_centerHorizontal="true" />
 
         <TextView
             android:id="@+id/tvLoginHere"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/loginHere"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="43dp"
-            android:text="@string/loginHere" />
+            android:layout_marginBottom="19dp" />
+
 
     </RelativeLayout>
 

@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
         // get the value of token
         String token = TokenUtils.getTokenFromSharedPreferences(preferences);
         // make an http call to the server
-        Call<ResponseBody> call = userClient.seeNextPage(token);
+        Call<ResponseBody> call = userClient.seeProfilePage(token);
         // enque the call
         call.enqueue(new Callback<ResponseBody>() {
             @Override

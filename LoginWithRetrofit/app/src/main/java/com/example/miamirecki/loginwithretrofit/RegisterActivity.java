@@ -2,6 +2,7 @@ package com.example.miamirecki.loginwithretrofit;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.opengl.ETC1;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.example.miamirecki.loginwithretrofit.model.BaseResponse;
 import com.example.miamirecki.loginwithretrofit.model.Login;
 import com.example.miamirecki.loginwithretrofit.model.LoginResponse;
+import com.example.miamirecki.loginwithretrofit.model.RegisterDetails;
 import com.example.miamirecki.loginwithretrofit.service.UserClient;
 
 import retrofit2.Call;
@@ -23,6 +25,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    EditText etFirstName;
+    EditText etLastName;
+    EditText etEmail;
     EditText etNewUsername;
     EditText etNewPassword;
     Button bRegister;
@@ -45,6 +50,9 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         // Find UI elements
+        etFirstName = (EditText) findViewById(R.id.etFirstNameRegister);
+        etLastName = (EditText) findViewById(R.id.etLastNameRegister);
+        etEmail = (EditText) findViewById(R.id.etEmailRegister);
         etNewUsername = (EditText) findViewById(R.id.etUsernameRegister);
         etNewPassword = (EditText) findViewById(R.id.etPasswordRegister);
         bRegister = (Button) findViewById(R.id.bRegister);
@@ -61,17 +69,23 @@ public class RegisterActivity extends AppCompatActivity {
     View.OnClickListener registerButtonPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            String firstName = etFirstName.getText().toString();
+            String lastName = etLastName.getText().toString();
+            String email = etEmail.getText().toString();
             String username = etNewUsername.getText().toString();
             String password = etNewPassword.getText().toString();
 
-            if(username.isEmpty() || password.isEmpty()) {
+            if(firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()
+                    || username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(
                         RegisterActivity.this,
-                        "You must enter username and password",
+                        "You must fill all fields.",
                         Toast.LENGTH_SHORT
                 ).show();
             } else {
-                register(username, password);
+                RegisterDetails registerDetails = new RegisterDetails(firstName,
+                        lastName, email, username, password);
+                register(registerDetails);
             }
         }
     };
@@ -86,10 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     };
 
-    private void register(final String username, final String password) {
-
-        // create a Login object
-        Login registerDetails = new Login(username, password);
+    private void register(RegisterDetails registerDetails) {
 
         // call the login function from UserClient interface
         Call<BaseResponse> call = userClient.register(registerDetails);

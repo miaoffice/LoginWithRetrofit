@@ -3,6 +3,7 @@ package com.example.miamirecki.loginwithretrofit.service;
 import com.example.miamirecki.loginwithretrofit.model.BaseResponse;
 import com.example.miamirecki.loginwithretrofit.model.Login;
 import com.example.miamirecki.loginwithretrofit.model.LoginResponse;
+import com.example.miamirecki.loginwithretrofit.model.RegisterDetails;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -35,13 +36,13 @@ public interface UserClient {
      to identify the user
      */
     @GET("home/login/profile")
-    Call<ResponseBody> seeNextPage(@Header("x-access-token") String authToken);
+    Call<ResponseBody> seeProfilePage(@Header("x-access-token") String authToken);
 
     /*
     registers new user by sending a Login object in the body of the request
     expects a RegisterResponse object in return, with RegisterResponse.success either true or false
      */
     @POST("home/register")
-    Call<BaseResponse> register(@Body Login login);
+    Call<BaseResponse> register(@Body RegisterDetails registerDetails);
 
 }

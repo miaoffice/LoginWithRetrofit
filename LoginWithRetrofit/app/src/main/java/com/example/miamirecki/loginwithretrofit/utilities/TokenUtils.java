@@ -13,16 +13,18 @@ public class TokenUtils {
 
     public static void writeTokenToSharedPreferences(SharedPreferences preferences, String token) {
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(Constants.SHARED_PREFERENCES_TOKEN, token);
+        editor.putString(Constants.SHARED_PREFERENCES_TOKEN_KEY, token);
         editor.apply();
     }
 
     public static String getTokenFromSharedPreferences(SharedPreferences preferences) {
-        return preferences.getString(Constants.SHARED_PREFERENCES_TOKEN, null);
+        return preferences.getString(Constants.SHARED_PREFERENCES_TOKEN_KEY, null);
     }
 
     public static void deleteTokenFromSharedPreferences(SharedPreferences preferences) {
-        // TODO: Make logout possible
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove(Constants.SHARED_PREFERENCES_TOKEN_KEY);
+        editor.apply();
     }
 
     public static void refreshTokenInSharedPreferences(SharedPreferences preferences) {

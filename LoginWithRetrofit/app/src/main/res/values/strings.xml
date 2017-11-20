@@ -10,10 +10,13 @@
     <string name="accountIconImageDescription">Round Account Icon</string>
 
     <!-- Register screen -->
-    <string name="pickAUsername">Pick a username</string>
-    <string name="pickAPassword">Pick a password</string>
+    <string name="firstName">first name</string>
+    <string name="lastName">last name</string>
+    <string name="email">email</string>
     <string name="loginHere">Already have an account? Click here to log in!</string>
     <string name="register">Register</string>
+
+    <string name="logout">Logout</string>
 
     <string name="serverMessageDefault">This will show the server response</string>
 

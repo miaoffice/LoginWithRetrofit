@@ -18,6 +18,6 @@ public class Constants {
     public static final String SHARED_PREFERENCES_NAME = "RetroFit Login";
 
     // Token preference name in SharedPreferences
-    public static final String SHARED_PREFERENCES_TOKEN = "Token preference";
+    public static final String SHARED_PREFERENCES_TOKEN_KEY = "Token preference";
 
 }
