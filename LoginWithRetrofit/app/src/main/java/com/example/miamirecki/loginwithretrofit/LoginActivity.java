@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -155,11 +154,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 // if there is a response from the server, cast it into a string and
-                // send it as an Extra to SecondActivity
+                // send it as an Extra to ProfilePageActivity
                 if(response.isSuccessful()) {
                     try {
                         String serverMessage = response.body().string();
-                        Intent toSecondActivityIntent = new Intent(LoginActivity.this, SecondActivity.class);
+                        Intent toSecondActivityIntent = new Intent(LoginActivity.this, ProfilePageActivity.class);
                         toSecondActivityIntent.putExtra(Constants.SECOND_ACTIVITY_EXTRA, serverMessage);
                         startActivity(toSecondActivityIntent);
                     } catch (IOException e) {
