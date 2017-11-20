@@ -3,7 +3,8 @@ package com.example.miamirecki.loginwithretrofit.model;
 /**
  * Created by miamirecki on 11/3/17.
  *
- * An object sent via login() and register() functions
+ * An object sent via login() function
+ *
  */
 
 public class Login {

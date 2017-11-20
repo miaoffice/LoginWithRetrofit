@@ -8,6 +8,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by miamirecki on 11/20/17.
  *
+ * Creates a Retrofit client which is used in every network call
+ *
  */
 
 public class ServiceGenerator {
@@ -18,8 +20,6 @@ public class ServiceGenerator {
             .addConverterFactory(GsonConverterFactory.create());
 
     private static Retrofit retrofit = builder.build();
-
-    UserClient userClient = retrofit.create(UserClient.class);
 
     public static <S> S createService(Class<S> serviceClass) {
         return retrofit.create(serviceClass);

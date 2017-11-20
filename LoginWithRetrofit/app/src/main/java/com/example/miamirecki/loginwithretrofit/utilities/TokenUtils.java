@@ -7,6 +7,8 @@ import com.example.miamirecki.loginwithretrofit.Constants;
 /**
  * Created by miamirecki on 11/20/17.
  *
+ * Utility class containing common actions performed on the token
+ *
  */
 
 public class TokenUtils {

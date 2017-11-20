@@ -3,7 +3,8 @@ package com.example.miamirecki.loginwithretrofit.model;
 /**
  * Created by miamirecki on 11/3/17.
  *
- * Response expected upon sucessful login. Contains token used for further authorization.
+ * Response expected upon successful login. Contains token used for further authorization.
+ *
  */
 
 public class LoginResponse {

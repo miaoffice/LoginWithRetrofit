@@ -17,6 +17,7 @@ import com.example.miamirecki.loginwithretrofit.model.LoginResponse;
 import com.example.miamirecki.loginwithretrofit.model.RegisterDetails;
 import com.example.miamirecki.loginwithretrofit.service.ServiceGenerator;
 import com.example.miamirecki.loginwithretrofit.service.UserClient;
+import com.example.miamirecki.loginwithretrofit.utilities.TokenUtils;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -97,18 +98,22 @@ public class RegisterActivity extends AppCompatActivity {
     private void register(RegisterDetails registerDetails) {
 
         // call the login function from UserClient interface
-        Call<BaseResponse> call = userClient.register(registerDetails);
+        Call<LoginResponse> call = userClient.register(registerDetails);
 
         // enqueue this call and decide how to treat the response
-        call.enqueue(new Callback<BaseResponse>() {
+        call.enqueue(new Callback<LoginResponse>() {
             // is the login is successful, send user to the next Activity
             @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful() && response.body().getSuccess()) {
                     Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                    // TODO: Show next page after successful login
-
-
+                    String token = response.body().getToken();
+                    if (token == null) {
+                        Toast.makeText(RegisterActivity.this, "Token is null!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        TokenUtils.writeTokenToSharedPreferences(preferences, token);
+                        showProfilePage();
+                    }
                 } else {
                     Toast.makeText(
                             RegisterActivity.this,
@@ -119,12 +124,15 @@ public class RegisterActivity extends AppCompatActivity {
             }
             // if login fails, show a Toast message
             @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Toast.makeText(RegisterActivity.this, "Login failed (onFailure)", Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
-
+    private void showProfilePage() {
+        Intent showProfilePageIntent = new Intent(RegisterActivity.this, ProfilePageActivity.class);
+        startActivity(showProfilePageIntent);
     }
 
 }

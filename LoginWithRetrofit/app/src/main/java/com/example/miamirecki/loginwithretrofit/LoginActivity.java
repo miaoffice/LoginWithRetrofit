@@ -118,6 +118,8 @@ public class LoginActivity extends AppCompatActivity {
                     if(token != null) {
                         TokenUtils.writeTokenToSharedPreferences(preferences, token);
                         showProfilePage();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Token is null", Toast.LENGTH_SHORT).show();
                     }
                 } else {
 

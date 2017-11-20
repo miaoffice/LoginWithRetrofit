@@ -2,6 +2,9 @@ package com.example.miamirecki.loginwithretrofit.model;
 
 /**
  * Created by miamirecki on 11/20/17.
+ *
+ * An object containing all the data the user provides when registering
+ *
  */
 
 public class RegisterDetails {
