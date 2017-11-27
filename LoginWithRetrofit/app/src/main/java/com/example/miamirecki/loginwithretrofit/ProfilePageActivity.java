@@ -4,9 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +27,12 @@ import retrofit2.Response;
 
 public class ProfilePageActivity extends AppCompatActivity {
 
-    TextView tvServerResponse;
+    FrameLayout flMainFrameLayout;
+    TextView tvAccountId;
+    TextView tvEmail;
+    TextView tvUsername;
+    TextView tvJoined;
+    Button btnLogout;
     SharedPreferences preferences;
 
     UserClient userClient = ServiceGenerator.createService(UserClient.class);
@@ -33,9 +42,22 @@ public class ProfilePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
-        tvServerResponse = (TextView) findViewById(R.id.tvServerResponse);
+        flMainFrameLayout = (FrameLayout) findViewById(R.id.flMainFrameLayout);
+        tvAccountId = (TextView) findViewById(R.id.tvAccountIDProfile);
+        tvUsername = (TextView) findViewById(R.id.tvUsernameProfile);
+        tvEmail = (TextView) findViewById(R.id.tvEmailProfile);
+        tvJoined = (TextView) findViewById(R.id.tvJoinedProfile);
+        btnLogout = (Button) findViewById(R.id.btnLogoutProfile);
 
-        // Get a referece to SharedPreferences
+        // Set onClickListener to button
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
+
+        // Get a reference to SharedPreferences
         preferences = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
 
         // Connect to REST server and get profile information
@@ -57,9 +79,7 @@ public class ProfilePageActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.logoutMenuItem:
-                TokenUtils.deleteTokenFromSharedPreferences(preferences);
-                Intent backToLogin = new Intent(ProfilePageActivity.this, LoginActivity.class);
-                startActivity(backToLogin);
+                logout();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -88,7 +108,7 @@ public class ProfilePageActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     try {
                         String serverMessage = response.body().string();
-                        tvServerResponse.setText(serverMessage);
+                        // TODO: Do sth with server response
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -108,9 +128,16 @@ public class ProfilePageActivity extends AppCompatActivity {
         });
     }
 
+
     private void goToLoginPage() {
         Intent goToLoginIntent = new Intent(ProfilePageActivity.this, LoginActivity.class);
         startActivity(goToLoginIntent);
     }
+
+    private void logout() {
+        TokenUtils.deleteTokenFromSharedPreferences(preferences);
+        goToLoginPage();
+    }
+
 
 }

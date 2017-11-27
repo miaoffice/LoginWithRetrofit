@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,18 +17,14 @@ import com.example.miamirecki.loginwithretrofit.service.ServiceGenerator;
 import com.example.miamirecki.loginwithretrofit.service.UserClient;
 import com.example.miamirecki.loginwithretrofit.utilities.TokenUtils;
 
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class LoginActivity extends AppCompatActivity {
 
-    // declare fields
+    // Declare fields
     EditText etUsername;
     EditText etPassword;
     Button bLogin;
@@ -35,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences preferences;
 
 
+    // Create the service from which to make network calls
     UserClient userClient = ServiceGenerator.createService(UserClient.class);
 
 
@@ -48,23 +46,25 @@ public class LoginActivity extends AppCompatActivity {
         bLogin = (Button) findViewById(R.id.bLogin);
         tvRegister = (TextView) findViewById(R.id.tvRegisterHere);
 
-
+        // Set onClickListeners to buttons
         bLogin.setOnClickListener(loginOnClickListener);
         tvRegister.setOnClickListener(registerOnClickListener);
 
         // get a reference to SharedPreferences
         preferences = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
 
-
+        // Prevent keyboard from popping up automatically
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     /*
-    Checks if both username and password feilds are filled,
+    Checks if both username and password fields are filled,
     takes the data and sends it to login()
      */
     View.OnClickListener loginOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
             String username = etUsername.getText().toString();
             String password = etPassword.getText().toString();
 
@@ -97,24 +97,18 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void login(String username, String password) {
 
-        // create a Login object
-        Login loginDetails = new Login(username, password);
+        // Call the login function from UserClient interface
+        Call<LoginResponse> call = userClient.login(new Login(username, password));
 
-        // call the login function from UserClient interface
-        Call<LoginResponse> call = userClient.login(loginDetails);
-
-        // enqueue this call and decide how to treat the response
+        // Enqueue this call and decide how to treat the response
         call.enqueue(new Callback<LoginResponse>() {
-            // is the login is successful, send user to the next Activity
+
+            // If the login is successful onResponse, send user to the next Activity
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-
                 if(response.isSuccessful() && response.body().getSuccess()) {
-
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-
                     String token = response.body().getToken();
-
                     if(token != null) {
                         TokenUtils.writeTokenToSharedPreferences(preferences, token);
                         showProfilePage();
@@ -122,7 +116,6 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Token is null", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-
                     Toast.makeText(
                             LoginActivity.this,
                             "Wrong username or password",
@@ -130,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                     ).show();
                 }
             }
+
             // if login fails, show a Toast message
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {

@@ -1,83 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.miamirecki.loginwithretrofit.LoginActivity"
-    android:background="@color/primary">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.example.miamirecki.loginwithretrofit.LoginActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/triangle"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/backgroundImageDescription"/>
+
+
+    <LinearLayout
+        android:orientation="vertical"
         android:id="@+id/mainRelativeLayout"
-        android:layout_width="320dp"
-        android:layout_height="400dp"
+        android:layout_width="250dp"
+        android:layout_height="300dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="96dp"
         android:background="@color/primary_light"
-        android:elevation="8dp">
+        android:elevation="2dp">
 
         <EditText
             android:id="@+id/etUsernameRegister"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:elevation="5dp"
+            android:layout_marginTop="64dp"
+            android:layout_gravity="center_horizontal"
             android:hint="@string/username"
-            android:padding="10dp"
-            android:visibility="visible"
-            android:layout_marginTop="95dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignLeft="@+id/etPasswordLogin"
-            android:layout_alignStart="@+id/etPasswordLogin" />
+            android:padding="8dp"
+            android:visibility="visible" />
 
         <EditText
             android:id="@+id/etPasswordLogin"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:elevation="5dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:padding="10dp"
-            android:visibility="visible"
-            android:layout_marginTop="28dp"
-            android:layout_below="@+id/etUsernameRegister"
-            android:layout_alignLeft="@+id/bLogin"
-            android:layout_alignStart="@+id/bLogin" />
+            android:padding="8dp"
+            android:visibility="visible" />
 
         <Button
             android:id="@+id/bLogin"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
             android:background="@drawable/button_rounded_background"
-            android:elevation="8dp"
-            android:padding="10dp"
+            android:elevation="2dp"
+            android:padding="8dp"
             android:text="@string/login"
-            android:textColor="@color/accent"
-            android:visibility="visible"
-            android:layout_marginTop="92dp"
-            android:layout_alignTop="@+id/etPasswordLogin"
-            android:layout_centerHorizontal="true" />
+            android:textColor="@color/accent"/>
 
         <TextView
             android:id="@+id/tvRegisterHere"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="43dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
             android:text="@string/registerHere" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/ivAccountIcon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/icon_rounded_background"
-        android:elevation="8dp"
-        app:srcCompat="@mipmap/ic_account_circle_white_48dp"
-        android:contentDescription="@string/accountIconImageDescription"/>
+        android:contentDescription="@string/accountIconImageDescription"
+        android:elevation="2dp"
+        app:srcCompat="@mipmap/ic_account_circle_white_48dp" />
 
 
 </FrameLayout>
+
+</ScrollView>

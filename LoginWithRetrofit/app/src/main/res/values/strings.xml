@@ -16,7 +16,14 @@
     <string name="loginHere">Already have an account? Click here to log in!</string>
     <string name="register">Register</string>
 
+    <!-- Profile screen -->
+    <string name="accountIdProfile">Account Id: </string>
+    <string name="usernameProfile">Username: </string>
+    <string name="emailProfile">Email: </string>
+    <string name="joinedProfile">Joined: </string>
+
     <string name="logout">Logout</string>
+    <string name="backgroundImageDescription">Colorful background Image</string>
 
     <string name="serverMessageDefault">This will show the server response</string>
 
