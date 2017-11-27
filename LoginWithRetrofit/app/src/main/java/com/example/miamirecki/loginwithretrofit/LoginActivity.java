@@ -41,10 +41,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        etUsername = (EditText) findViewById(R.id.etUsernameRegister);
-        etPassword = (EditText) findViewById(R.id.etPasswordLogin);
-        bLogin = (Button) findViewById(R.id.bLogin);
-        tvRegister = (TextView) findViewById(R.id.tvRegisterHere);
+        etUsername = findViewById(R.id.etUsernameRegister);
+        etPassword = findViewById(R.id.etPasswordLogin);
+        bLogin = findViewById(R.id.bLogin);
+        tvRegister = findViewById(R.id.tvRegisterHere);
 
         // Set onClickListeners to buttons
         bLogin.setOnClickListener(loginOnClickListener);
@@ -53,8 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         // get a reference to SharedPreferences
         preferences = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
 
-        // Prevent keyboard from popping up automatically
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     /*

@@ -22,13 +22,14 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:id="@+id/mainRelativeLayout"
-        android:layout_width="250dp"
+        android:id="@+id/mainLinearLayout"
+        android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="96dp"
-        android:background="@color/primary_light"
+        android:background="@drawable/card_rounded_background"
         android:elevation="2dp">
+
 
         <EditText
             android:id="@+id/etUsernameRegister"

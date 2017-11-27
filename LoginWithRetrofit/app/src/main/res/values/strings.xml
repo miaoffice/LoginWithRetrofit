@@ -25,6 +25,6 @@
     <string name="logout">Logout</string>
     <string name="backgroundImageDescription">Colorful background Image</string>
 
-    <string name="serverMessageDefault">This will show the server response</string>
+    <string name="placeholder">placeholder</string>
 
 </resources>
