@@ -8,9 +8,40 @@ package com.example.miamirecki.loginwithretrofit.model;
 
 public class ProfileInfo {
 
-    String username;
-    String password;
-    String accountId;
-    String joinedAt;
+    private String _id;
+    private String updatedAt;
+    private String createdAt;
+    private String username;
+    private String password;
+    private String email_address;
+    private String firstName;
+    private String lastName;
+    private String v;
+
+    public String getId() {
+        return _id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email_address;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
 
 }
+
+// TODO: Make time work

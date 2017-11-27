@@ -3,6 +3,7 @@ package com.example.miamirecki.loginwithretrofit.service;
 import com.example.miamirecki.loginwithretrofit.model.BaseResponse;
 import com.example.miamirecki.loginwithretrofit.model.Login;
 import com.example.miamirecki.loginwithretrofit.model.LoginResponse;
+import com.example.miamirecki.loginwithretrofit.model.ProfileInfo;
 import com.example.miamirecki.loginwithretrofit.model.RegisterDetails;
 
 import okhttp3.ResponseBody;
@@ -44,6 +45,6 @@ public interface UserClient {
      to identify the user
      */
     @GET("home/login/profile")
-    Call<ResponseBody> seeProfilePage(@Header("x-access-token") String authToken);
+    Call<ProfileInfo> seeProfilePage(@Header("x-access-token") String authToken);
 
 }

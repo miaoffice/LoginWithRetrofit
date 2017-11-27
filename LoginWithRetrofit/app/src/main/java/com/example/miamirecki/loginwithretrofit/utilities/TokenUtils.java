@@ -16,7 +16,7 @@ public class TokenUtils {
     public static void writeTokenToSharedPreferences(SharedPreferences preferences, String token) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.SHARED_PREFERENCES_TOKEN_KEY, token);
-        editor.apply();
+        editor.commit();
     }
 
     public static String getTokenFromSharedPreferences(SharedPreferences preferences) {

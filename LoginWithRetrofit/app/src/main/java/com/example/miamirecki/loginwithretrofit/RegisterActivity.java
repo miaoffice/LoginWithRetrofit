@@ -45,13 +45,13 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         // Find UI elements
-        etFirstName = (EditText) findViewById(R.id.etFirstNameRegister);
-        etLastName = (EditText) findViewById(R.id.etLastNameRegister);
-        etEmail = (EditText) findViewById(R.id.etEmailRegister);
-        etNewUsername = (EditText) findViewById(R.id.etUsernameRegister);
-        etNewPassword = (EditText) findViewById(R.id.etPasswordRegister);
-        bRegister = (Button) findViewById(R.id.bRegister);
-        tvLoginHere = (TextView) findViewById(R.id.tvLoginHere);
+        etFirstName = findViewById(R.id.etFirstNameRegister);
+        etLastName = findViewById(R.id.etLastNameRegister);
+        etEmail = findViewById(R.id.etEmailRegister);
+        etNewUsername = findViewById(R.id.etUsernameRegister);
+        etNewPassword = findViewById(R.id.etPasswordRegister);
+        bRegister = findViewById(R.id.bRegister);
+        tvLoginHere = findViewById(R.id.tvLoginHere);
 
         // Set onClickListeners to Buttons
         tvLoginHere.setOnClickListener(loginHerePressed);
@@ -108,16 +108,16 @@ public class RegisterActivity extends AppCompatActivity {
                 if(response.isSuccessful() && response.body().getSuccess()) {
                     Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                     String token = response.body().getToken();
-                    if (token == null) {
-                        Toast.makeText(RegisterActivity.this, "Token is null!", Toast.LENGTH_SHORT).show();
-                    } else {
+                    if(token != null) {
                         TokenUtils.writeTokenToSharedPreferences(preferences, token);
                         showProfilePage();
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Token is null", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(
                             RegisterActivity.this,
-                            "Wrong username or password",
+                            "Registration was not sucessfull",
                             Toast.LENGTH_SHORT
                     ).show();
                 }

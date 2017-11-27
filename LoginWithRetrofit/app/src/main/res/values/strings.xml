@@ -18,9 +18,11 @@
 
     <!-- Profile screen -->
     <string name="accountIdProfile">Account Id: </string>
+    <string name="name">Name: </string>
     <string name="usernameProfile">Username: </string>
     <string name="emailProfile">Email: </string>
-    <string name="joinedProfile">Joined: </string>
+    <string name="joinedProfile">Member since: </string>
+    <string name="isNull"> is null</string>
 
     <string name="logout">Logout</string>
     <string name="backgroundImageDescription">Colorful background Image</string>

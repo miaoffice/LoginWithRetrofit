@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,13 +13,11 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.miamirecki.loginwithretrofit.model.ProfileInfo;
 import com.example.miamirecki.loginwithretrofit.service.ServiceGenerator;
 import com.example.miamirecki.loginwithretrofit.service.UserClient;
 import com.example.miamirecki.loginwithretrofit.utilities.TokenUtils;
 
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,6 +29,7 @@ public class ProfilePageActivity extends AppCompatActivity {
     TextView tvEmail;
     TextView tvUsername;
     TextView tvJoined;
+    TextView tvName;
     Button btnLogout;
     SharedPreferences preferences;
 
@@ -42,12 +40,13 @@ public class ProfilePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
-        flMainFrameLayout = (FrameLayout) findViewById(R.id.flMainFrameLayout);
-        tvAccountId = (TextView) findViewById(R.id.tvAccountIDProfile);
-        tvUsername = (TextView) findViewById(R.id.tvUsernameProfile);
-        tvEmail = (TextView) findViewById(R.id.tvEmailProfile);
-        tvJoined = (TextView) findViewById(R.id.tvJoinedProfile);
-        btnLogout = (Button) findViewById(R.id.btnLogoutProfile);
+        flMainFrameLayout = findViewById(R.id.flMainFrameLayout);
+        tvAccountId = findViewById(R.id.tvAccountIDProfile);
+        tvUsername = findViewById(R.id.tvUsernameProfile);
+        tvEmail = findViewById(R.id.tvEmailProfile);
+        tvJoined = findViewById(R.id.tvJoinedProfile);
+        tvName = findViewById(R.id.tvNameProfile);
+        btnLogout = findViewById(R.id.btnLogoutProfile);
 
         // Set onClickListener to button
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -62,8 +61,6 @@ public class ProfilePageActivity extends AppCompatActivity {
 
         // Connect to REST server and get profile information
         getProfileInfo();
-
-        // TODO: Show profile info
 
     }
 
@@ -98,27 +95,24 @@ public class ProfilePageActivity extends AppCompatActivity {
             goToLoginPage();
         }
         // make an http call to the server
-        Call<ResponseBody> call = userClient.seeProfilePage(token);
+        Call<ProfileInfo> call = userClient.seeProfilePage(token);
         // enque the call
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<ProfileInfo>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<ProfileInfo> call, Response<ProfileInfo> response) {
                 // if there is a response from the server, cast it into a string and
                 // send it as an Extra to ProfilePageActivity
                 if(response.isSuccessful()) {
-                    try {
-                        String serverMessage = response.body().string();
-                        // TODO: Do sth with server response
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    ProfileInfo profile = response.body();
+                    fillProfileUI(profile);
                 } else {
+                    //Toast.makeText(ProfilePageActivity.this, "Response was not successful", Toast.LENGTH_SHORT).show();
                     goToLoginPage();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<ProfileInfo> call, Throwable t) {
                 Toast.makeText(
                         ProfilePageActivity.this,
                         "Failed to get response via showProfileInfo() - onFailure",
@@ -139,5 +133,38 @@ public class ProfilePageActivity extends AppCompatActivity {
         goToLoginPage();
     }
 
+    private void fillProfileUI(ProfileInfo profile) {
+        checkAndFillInfo(profile.getId(), tvAccountId);
+        checkAndFillInfo(profile.getUsername(), tvUsername);
+        checkAndFillInfo(profile.getEmail(), tvEmail);
+        checkAndFillInfo(trimDate(profile.getCreatedAt()), tvJoined);
 
+
+        String firstname = profile.getFirstName();
+        String lastname = profile.getLastName();
+        if(firstname == null && lastname == null) {
+            tvName.setText(getResources().getString(R.string.isNull));
+        } else if (firstname != null && lastname == null) {
+            String firstNameCapitalized = firstname.substring(0, 1).toUpperCase() + firstname.substring(1);
+            tvName.setText(firstNameCapitalized);
+        } else {
+            String firstNameCapitalized = firstname.substring(0, 1).toUpperCase() + firstname.substring(1);
+            String lastNameCapitalized = lastname.substring(0, 1).toUpperCase() + lastname.substring(1);
+            String fullName = firstNameCapitalized + " " + lastNameCapitalized;
+            tvName.setText(fullName);
+        }
+    }
+
+    private void checkAndFillInfo(String info, TextView textView) {
+        if (info != null) {
+            textView.setText(info);
+        } else {
+            textView.setText(getResources().getString(R.string.isNull));
+        }
+    }
+
+    private String trimDate(String dateString) {
+        // TODO: Apply String to Date conversion
+        return dateString.substring(0, 10);
+    }
 }
