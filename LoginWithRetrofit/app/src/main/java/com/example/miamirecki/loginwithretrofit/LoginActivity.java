@@ -21,6 +21,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -69,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
             if(username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(
                         LoginActivity.this,
-                        "Please provide a username and a password",
+                        "Please provide username and password",
                         Toast.LENGTH_SHORT
                 ).show();
             } else {
@@ -84,8 +86,7 @@ public class LoginActivity extends AppCompatActivity {
     View.OnClickListener registerOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(registerIntent);
+            goToRegisterActivity();
         }
     };
 
@@ -109,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                     String token = response.body().getToken();
                     if(token != null) {
                         TokenUtils.writeTokenToSharedPreferences(preferences, token);
-                        showProfilePage();
+                        goToProfilePage();
                     } else {
                         Toast.makeText(LoginActivity.this, "Token is null", Toast.LENGTH_SHORT).show();
                     }
@@ -131,11 +132,17 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void showProfilePage() {
+    private void goToProfilePage() {
         Intent showProfilePageIntent = new Intent(LoginActivity.this, ProfilePageActivity.class);
+        showProfilePageIntent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(showProfilePageIntent);
+        finish();
     }
 
-
+    private void goToRegisterActivity() {
+        Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+        registerIntent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(registerIntent);
+    }
 
 }

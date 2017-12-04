@@ -22,12 +22,7 @@
                 android:layout_marginTop="50dp">
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:padding="8dp"
-                    android:gravity="end"
-                    android:layout_weight="2"
+                    style="@style/ProfileInfoFieldLabel"
                     android:text="@string/accountIdProfile" />
 
                 <TextView
@@ -42,11 +37,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:gravity="end"
-                    android:layout_weight="2"
+                    style="@style/ProfileInfoFieldLabel"
                     android:text="@string/name" />
 
                 <TextView
@@ -61,12 +52,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:gravity="end"
-                    android:layout_weight="2"
+                    style="@style/ProfileInfoFieldLabel"
                     android:text="@string/usernameProfile" />
 
                 <TextView
@@ -81,13 +67,8 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:padding="8dp"
-                    android:text="@string/emailProfile"
-                    android:id="@+id/textView2" />
+                    style="@style/ProfileInfoFieldLabel"
+                    android:text="@string/emailProfile" />
 
                 <TextView
                     android:id="@+id/tvEmailProfile"
@@ -101,11 +82,7 @@
                  android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="end"
-                    android:padding="8dp"
+                    style="@style/ProfileInfoFieldLabel"
                     android:text="@string/joinedProfile"/>
 
                 <TextView

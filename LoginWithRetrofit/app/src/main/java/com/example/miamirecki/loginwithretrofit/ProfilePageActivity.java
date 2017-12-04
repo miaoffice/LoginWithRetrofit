@@ -2,8 +2,10 @@ package com.example.miamirecki.loginwithretrofit;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.session.MediaSession;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -126,6 +128,7 @@ public class ProfilePageActivity extends AppCompatActivity {
     private void goToLoginPage() {
         Intent goToLoginIntent = new Intent(ProfilePageActivity.this, LoginActivity.class);
         startActivity(goToLoginIntent);
+        finish();
     }
 
     private void logout() {
@@ -133,7 +136,12 @@ public class ProfilePageActivity extends AppCompatActivity {
         goToLoginPage();
     }
 
+    /*
+    UI helper methods are bellow
+     */
+
     private void fillProfileUI(ProfileInfo profile) {
+
         checkAndFillInfo(profile.getId(), tvAccountId);
         checkAndFillInfo(profile.getUsername(), tvUsername);
         checkAndFillInfo(profile.getEmail(), tvEmail);

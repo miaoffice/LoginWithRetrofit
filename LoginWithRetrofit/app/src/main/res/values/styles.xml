@@ -32,8 +32,17 @@
         <item name="android:layout_weight">3</item>
         <item name="android:padding">8dp</item>
         <item name="android:text">@string/placeholder</item>
-        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Medium</item>
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Body1</item>
         <item name="android:textColor">@color/primary_text</item>
+    </style>
+
+    <style name="ProfileInfoFieldLabel">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:gravity">end</item>
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Caption</item>
     </style>
 
 </resources>

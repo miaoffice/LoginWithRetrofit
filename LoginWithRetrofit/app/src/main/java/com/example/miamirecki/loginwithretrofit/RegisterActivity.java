@@ -91,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
     View.OnClickListener loginHerePressed = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            goToLoginActivity();
         }
     };
 
@@ -110,7 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
                     String token = response.body().getToken();
                     if(token != null) {
                         TokenUtils.writeTokenToSharedPreferences(preferences, token);
-                        showProfilePage();
+                        goToProfilePage();
                     } else {
                         Toast.makeText(RegisterActivity.this, "Token is null", Toast.LENGTH_SHORT).show();
                     }
@@ -130,9 +130,15 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void showProfilePage() {
+    private void goToProfilePage() {
         Intent showProfilePageIntent = new Intent(RegisterActivity.this, ProfilePageActivity.class);
         startActivity(showProfilePageIntent);
+    }
+
+    private void goToLoginActivity() {
+        Intent toLoginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+        toLoginIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(toLoginIntent);
     }
 
 }
